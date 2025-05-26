@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,9 +8,24 @@ import SecurityModuleCard from '../components/SecurityModuleCard';
 import EducationalContent from '../components/EducationalContent';
 import DefenseStrategies from '../components/DefenseStrategies';
 import HackingTools from '../components/HackingTools';
+import LoadingScreen from '../components/LoadingScreen';
 
 const Index = () => {
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   const securityModules = [
     {
@@ -138,22 +152,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono">
-      {/* Hacker-style Header */}
-      <div className="bg-gray-900 border-b border-green-500 shadow-lg shadow-green-500/20">
+      {/* Enhanced Hacker-style Header */}
+      <div className="bg-gradient-to-r from-gray-900 to-black border-b border-green-500 shadow-lg shadow-green-500/30">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-green-500 rounded-lg animate-pulse">
+              <div className="p-2 bg-gradient-to-r from-green-500 to-green-400 rounded-lg animate-pulse shadow-lg shadow-green-500/50">
                 <Shield className="h-6 w-6 text-black" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-green-400">D0LF1N T00L5</h1>
+                <h1 className="text-2xl font-bold text-green-400 tracking-wider">D0LF1N T00L5</h1>
                 <p className="text-green-300 text-sm font-mono">[ETHICAL PENETRATION TESTING FRAMEWORK]</p>
               </div>
             </div>
             <div className="text-right">
               <p className="text-green-400 text-sm">root@dolfin:~$</p>
-              <p className="text-green-300 font-semibold">ethicalphoenix</p>
+              <p className="text-green-300 font-semibold">Developer: @ethicalphoenix</p>
+              <div className="flex items-center space-x-2 mt-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-xs text-green-400">SYSTEM_ONLINE</span>
+              </div>
             </div>
           </div>
         </div>
@@ -161,8 +179,8 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-6 py-8">
-        {/* Warning Banner */}
-        <Card className="mb-8 border-red-500 bg-red-900/20 shadow-lg shadow-red-500/20">
+        {/* Enhanced Warning Banner */}
+        <Card className="mb-8 border-red-500 bg-gradient-to-r from-red-900/30 to-gray-900/50 shadow-lg shadow-red-500/30">
           <CardContent className="p-6">
             <div className="flex items-start space-x-3">
               <AlertTriangle className="h-6 w-6 text-red-400 mt-1 animate-pulse" />
@@ -171,25 +189,27 @@ const Index = () => {
                 <p className="text-red-300 text-sm font-mono">
                   {"> "}This platform is designed for educational purposes and authorized security testing only.<br/>
                   {"> "}All techniques should only be applied to systems you own or have explicit permission to test.<br/>
-                  {"> "}Unauthorized use of these techniques may be illegal and unethical.
+                  {"> "}Unauthorized use of these techniques may be illegal and unethical.<br/>
+                  {"> "}Framework developed by @ethicalphoenix for ethical security research.
                 </p>
               </div>
             </div>
           </CardContent>
         </Card>
 
+        {/* Enhanced Tabs with better styling */}
         <Tabs defaultValue="tools" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-900 border border-green-500">
-            <TabsTrigger value="tools" className="data-[state=active]:bg-green-500 data-[state=active]:text-black font-mono">
+          <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-gray-900 to-black border border-green-500 shadow-lg shadow-green-500/20">
+            <TabsTrigger value="tools" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
               HACK_TOOLS
             </TabsTrigger>
-            <TabsTrigger value="modules" className="data-[state=active]:bg-green-500 data-[state=active]:text-black font-mono">
+            <TabsTrigger value="modules" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
               MODULES
             </TabsTrigger>
-            <TabsTrigger value="education" className="data-[state=active]:bg-green-500 data-[state=active]:text-black font-mono">
+            <TabsTrigger value="education" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
               EDUCATION
             </TabsTrigger>
-            <TabsTrigger value="defense" className="data-[state=active]:bg-green-500 data-[state=active]:text-black font-mono">
+            <TabsTrigger value="defense" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
               DEFENSE
             </TabsTrigger>
           </TabsList>
