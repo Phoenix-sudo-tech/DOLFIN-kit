@@ -169,9 +169,9 @@ const Index = () => {
               <div>
                 <h3 className="text-red-400 font-semibold mb-2 font-mono">[WARNING] AUTHORIZED USE ONLY</h3>
                 <p className="text-red-300 text-sm font-mono">
-                  > This platform is designed for educational purposes and authorized security testing only.<br/>
-                  > All techniques should only be applied to systems you own or have explicit permission to test.<br/>
-                  > Unauthorized use of these techniques may be illegal and unethical.
+                  {"> "}This platform is designed for educational purposes and authorized security testing only.<br/>
+                  {"> "}All techniques should only be applied to systems you own or have explicit permission to test.<br/>
+                  {"> "}Unauthorized use of these techniques may be illegal and unethical.
                 </p>
               </div>
             </div>
