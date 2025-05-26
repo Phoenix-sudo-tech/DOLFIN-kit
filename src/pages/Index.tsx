@@ -179,14 +179,14 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-6 py-8">
-        {/* Enhanced Warning Banner */}
-        <Card className="mb-8 border-red-500 bg-gradient-to-r from-red-900/30 to-gray-900/50 shadow-lg shadow-red-500/30">
+        {/* Enhanced Warning Banner with Black and Red Theme */}
+        <Card className="mb-8 border-red-500 bg-black shadow-lg shadow-red-500/50">
           <CardContent className="p-6">
             <div className="flex items-start space-x-3">
-              <AlertTriangle className="h-6 w-6 text-red-400 mt-1 animate-pulse" />
+              <AlertTriangle className="h-6 w-6 text-red-500 mt-1 animate-pulse" />
               <div>
-                <h3 className="text-red-400 font-semibold mb-2 font-mono">[WARNING] AUTHORIZED USE ONLY</h3>
-                <p className="text-red-300 text-sm font-mono">
+                <h3 className="text-red-500 font-semibold mb-2 font-mono">[WARNING] AUTHORIZED USE ONLY</h3>
+                <p className="text-red-400 text-sm font-mono">
                   {"> "}This platform is designed for educational purposes and authorized security testing only.<br/>
                   {"> "}All techniques should only be applied to systems you own or have explicit permission to test.<br/>
                   {"> "}Unauthorized use of these techniques may be illegal and unethical.<br/>
