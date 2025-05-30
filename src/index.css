@@ -88,11 +88,29 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
   }
 
   body {
     @apply bg-black text-red-400 font-mono;
     background: linear-gradient(45deg, #000000 0%, #1a0000 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Android-specific optimizations */
+  @supports (-webkit-touch-callout: none) {
+    body {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
   }
 
   /* Custom scrollbar */
@@ -126,5 +144,35 @@
   .cursor-blink::after {
     content: '█';
     animation: blink 1s infinite;
+  }
+
+  /* Mobile-first responsive design */
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding: 0 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding: 0 2rem;
+    }
+  }
+
+  /* Fix for Android viewport issues */
+  @media screen and (max-width: 767px) {
+    body {
+      min-height: 100dvh;
+    }
+    
+    .min-h-screen {
+      min-height: 100dvh;
+    }
   }
 }
