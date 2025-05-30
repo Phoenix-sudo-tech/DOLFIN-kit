@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,7 @@ const SocialEngTools = () => {
 
   const generateRealSocialEngScript = (type: string, target: string): string => {
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+    const invoiceAmount = "99.99"; // Fixed the undefined amount variable
     
     if (type === 'phishing') {
       return `#!/usr/bin/env python3
@@ -93,7 +93,7 @@ Support Team
 Your monthly invoice is now available and requires immediate payment.
 
 Invoice Number: #{invoice_num}
-Amount Due: ${amount}
+Amount Due: ${invoiceAmount}
 Due Date: {due_date}
 
 Download your invoice and make payment:
@@ -236,7 +236,7 @@ if __name__ == "__main__":
         "verification_link": "https://secure-verification.com/verify",
         "reset_link": "https://password-reset.com/reset",
         "invoice_num": "INV-2024-001",
-        "amount": "99.99",
+        "amount": "${invoiceAmount}",
         "due_date": "2024-12-31"
     }
     
