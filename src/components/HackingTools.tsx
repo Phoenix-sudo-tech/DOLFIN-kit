@@ -28,38 +28,38 @@ const HackingTools = () => {
       </Card>
 
       <Tabs defaultValue="recon" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8 bg-black border border-red-600 gap-1">
-          <TabsTrigger value="recon" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 bg-black border border-red-600 p-1">
+          <TabsTrigger value="recon" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Eye className="h-3 w-3 mr-1" />
-            RECON
+            <span className="hidden sm:inline">RECON</span>
           </TabsTrigger>
-          <TabsTrigger value="network" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+          <TabsTrigger value="network" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Server className="h-3 w-3 mr-1" />
-            NETWORK
+            <span className="hidden sm:inline">NETWORK</span>
           </TabsTrigger>
-          <TabsTrigger value="wifi" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+          <TabsTrigger value="wifi" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Wifi className="h-3 w-3 mr-1" />
-            WIFI
+            <span className="hidden sm:inline">WIFI</span>
           </TabsTrigger>
-          <TabsTrigger value="web" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+          <TabsTrigger value="web" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Globe className="h-3 w-3 mr-1" />
-            WEB
+            <span className="hidden sm:inline">WEB</span>
           </TabsTrigger>
-          <TabsTrigger value="mobile" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+          <TabsTrigger value="mobile" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Smartphone className="h-3 w-3 mr-1" />
-            MOBILE
+            <span className="hidden sm:inline">MOBILE</span>
           </TabsTrigger>
-          <TabsTrigger value="social" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+          <TabsTrigger value="social" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Users className="h-3 w-3 mr-1" />
-            SOCIAL
+            <span className="hidden sm:inline">SOCIAL</span>
           </TabsTrigger>
-          <TabsTrigger value="exploit" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+          <TabsTrigger value="exploit" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Shield className="h-3 w-3 mr-1" />
-            EXPLOIT
+            <span className="hidden sm:inline">EXPLOIT</span>
           </TabsTrigger>
-          <TabsTrigger value="crypto" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs">
+          <TabsTrigger value="crypto" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400 font-mono text-xs flex items-center justify-center">
             <Lock className="h-3 w-3 mr-1" />
-            CRYPTO
+            <span className="hidden sm:inline">CRYPTO</span>
           </TabsTrigger>
         </TabsList>
 
