@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -310,15 +309,25 @@ const Index = () => {
                     </p>
                     
                     <div className="space-y-3">
-                      <div className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded">
+                      <a 
+                        href="https://instagram.com/ethicalphoenix" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded hover:bg-red-600 hover:text-black transition-colors cursor-pointer"
+                      >
                         <Instagram className="h-5 w-5 text-red-400" />
                         <span className="text-red-400 font-mono">@ethicalphoenix</span>
-                      </div>
+                      </a>
                       
-                      <div className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded">
+                      <a 
+                        href="https://t.me/grey_008" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded hover:bg-red-600 hover:text-black transition-colors cursor-pointer"
+                      >
                         <MessageCircle className="h-5 w-5 text-red-400" />
                         <span className="text-red-400 font-mono">t.me/grey_008</span>
-                      </div>
+                      </a>
                     </div>
                     
                     <div className="mt-6 p-4 bg-gray-900 border border-red-600 rounded">

