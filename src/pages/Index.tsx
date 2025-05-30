@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Eye, Network, Database, Lock, AlertTriangle, BookOpen, Code, Terminal, Users, Globe, Server } from 'lucide-react';
+import { Shield, Eye, Network, Database, Lock, AlertTriangle, BookOpen, Code, Terminal, Users, Globe, Server, User, Instagram, MessageCircle } from 'lucide-react';
 import SecurityModuleCard from '../components/SecurityModuleCard';
 import EducationalContent from '../components/EducationalContent';
 import DefenseStrategies from '../components/DefenseStrategies';
@@ -15,10 +16,9 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -30,147 +30,146 @@ const Index = () => {
   const securityModules = [
     {
       id: 'reconnaissance',
-      title: 'Reconnaissance & Information Gathering',
-      description: 'Learn about passive information gathering techniques for authorized security assessments',
+      title: 'Advanced Reconnaissance',
+      description: 'Professional OSINT and information gathering framework',
       icon: Eye,
-      color: 'bg-green-500',
+      color: 'bg-red-600',
       techniques: [
-        'Footprinting Fundamentals',
-        'DNS Enumeration (Authorized)',
-        'WHOIS Analysis',
-        'Network Mapping Basics',
-        'OSINT Techniques'
+        'Advanced OSINT Framework',
+        'Subdomain Enumeration',
+        'Port & Service Discovery',
+        'Vulnerability Assessment',
+        'Social Media Intelligence'
       ],
       defenseStrategies: [
         'Information Disclosure Prevention',
-        'DNS Security Configuration',
+        'DNS Security Hardening',
         'Network Segmentation',
         'Privacy Controls'
       ]
     },
     {
       id: 'network-security',
-      title: 'Network Security Assessment',
-      description: 'Understanding network vulnerabilities and defensive measures',
+      title: 'Network Penetration',
+      description: 'Advanced network exploitation and assessment tools',
       icon: Network,
-      color: 'bg-red-500',
+      color: 'bg-red-700',
       techniques: [
-        'Port Scanning (Authorized Networks)',
-        'Banner Grabbing Analysis',
-        'Vulnerability Scanning',
-        'Network Architecture Analysis',
-        'Service Enumeration'
+        'Advanced Port Scanning',
+        'Service Exploitation',
+        'Network Pivoting',
+        'Lateral Movement',
+        'Traffic Analysis'
       ],
       defenseStrategies: [
-        'Firewall Configuration',
-        'Intrusion Detection Systems',
-        'Network Monitoring',
-        'Service Hardening'
+        'Network Hardening',
+        'IDS/IPS Implementation',
+        'Zero Trust Architecture',
+        'Micro-segmentation'
       ]
     },
     {
       id: 'social-engineering',
-      title: 'Social Engineering Awareness',
-      description: 'Educational content on social engineering tactics and defense',
+      title: 'Social Engineering',
+      description: 'Human factor security assessment and training',
       icon: Users,
-      color: 'bg-orange-500',
+      color: 'bg-red-800',
       techniques: [
-        'Phishing Awareness Training',
-        'Pretexting Recognition',
-        'Vishing Defense',
-        'Smishing Identification',
-        'Spear Phishing Prevention'
+        'Advanced Phishing Campaigns',
+        'Pretexting Frameworks',
+        'Voice Phishing (Vishing)',
+        'Physical Security Bypass',
+        'OSINT-based Targeting'
       ],
       defenseStrategies: [
-        'Security Awareness Training',
-        'Email Security Policies',
-        'Multi-Factor Authentication',
-        'Incident Response Procedures'
+        'Security Awareness Programs',
+        'Phishing Simulation',
+        'Behavioral Analysis',
+        'Incident Response Training'
       ]
     },
     {
       id: 'web-security',
-      title: 'Web Application Security',
-      description: 'Learn about web vulnerabilities and secure development practices',
+      title: 'Web Application Hacking',
+      description: 'Advanced web application penetration testing',
       icon: Globe,
-      color: 'bg-purple-500',
+      color: 'bg-red-600',
       techniques: [
-        'XSS Prevention',
-        'SQL Injection Defense',
-        'CSRF Protection',
-        'Input Validation',
-        'Session Management'
+        'Advanced XSS Exploitation',
+        'SQL Injection Mastery',
+        'Authentication Bypass',
+        'Session Hijacking',
+        'API Security Testing'
       ],
       defenseStrategies: [
-        'Secure Coding Practices',
+        'Secure Development Lifecycle',
         'Web Application Firewalls',
-        'Security Headers',
-        'Regular Security Testing'
+        'Runtime Protection',
+        'Security Headers Implementation'
       ]
     },
     {
       id: 'system-security',
-      title: 'System & Infrastructure Security',
-      description: 'Understanding system-level security and hardening techniques',
+      title: 'System Exploitation',
+      description: 'Advanced system-level penetration testing',
       icon: Server,
-      color: 'bg-yellow-500',
+      color: 'bg-red-700',
       techniques: [
-        'Buffer Overflow Prevention',
-        'Memory Protection',
-        'Access Control',
-        'Privilege Escalation Defense',
-        'Malware Detection'
+        'Buffer Overflow Exploitation',
+        'Privilege Escalation',
+        'Kernel Exploitation',
+        'Memory Corruption',
+        'Advanced Persistence'
       ],
       defenseStrategies: [
         'System Hardening',
-        'Endpoint Protection',
-        'Patch Management',
-        'Monitoring & Logging'
+        'Endpoint Detection & Response',
+        'Application Whitelisting',
+        'Behavioral Monitoring'
       ]
     },
     {
       id: 'cryptography',
-      title: 'Cryptography & Data Protection',
-      description: 'Learn about encryption, hashing, and data protection methods',
+      title: 'Cryptographic Attacks',
+      description: 'Advanced cryptanalysis and implementation attacks',
       icon: Lock,
-      color: 'bg-cyan-500',
+      color: 'bg-red-800',
       techniques: [
-        'Encryption Standards',
-        'Hash Functions',
-        'Digital Signatures',
-        'Key Management',
-        'SSL/TLS Implementation'
+        'Hash Collision Attacks',
+        'Side-Channel Analysis',
+        'Implementation Flaws',
+        'Key Recovery Attacks',
+        'Protocol Weaknesses'
       ],
       defenseStrategies: [
-        'Data Encryption at Rest',
-        'Transport Layer Security',
-        'Key Rotation Policies',
-        'Certificate Management'
+        'Cryptographic Standards',
+        'Key Management Systems',
+        'Hardware Security Modules',
+        'Quantum-Resistant Algorithms'
       ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-black text-green-400 font-mono">
-      {/* Enhanced Hacker-style Header */}
-      <div className="bg-gradient-to-r from-gray-900 to-black border-b border-green-500 shadow-lg shadow-green-500/30">
+    <div className="min-h-screen bg-black text-red-400 font-mono">
+      {/* Minimal Header */}
+      <div className="bg-black border-b border-red-600">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-green-500 to-green-400 rounded-lg animate-pulse shadow-lg shadow-green-500/50">
+              <div className="p-2 bg-red-600 rounded">
                 <Shield className="h-6 w-6 text-black" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-green-400 tracking-wider">D0LF1N T00L5</h1>
-                <p className="text-green-300 text-sm font-mono">[ETHICAL PENETRATION TESTING FRAMEWORK]</p>
+                <h1 className="text-2xl font-bold text-red-400">PHOENIX FRAMEWORK</h1>
+                <p className="text-red-300 text-sm">Advanced Penetration Testing Suite</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-green-400 text-sm">root@dolfin:~$</p>
-              <p className="text-green-300 font-semibold">Developer: @ethicalphoenix</p>
+              <p className="text-red-400 text-sm">phoenix@framework:~$</p>
               <div className="flex items-center space-x-2 mt-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-xs text-green-400">SYSTEM_ONLINE</span>
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-xs text-red-400">ONLINE</span>
               </div>
             </div>
           </div>
@@ -178,49 +177,49 @@ const Index = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-6 py-8">
-        {/* Enhanced Warning Banner with Black and Red Theme */}
-        <Card className="mb-8 border-red-500 bg-black shadow-lg shadow-red-500/50">
-          <CardContent className="p-6">
+      <div className="container mx-auto px-6 py-6">
+        {/* Warning Banner */}
+        <Card className="mb-6 border-red-600 bg-black">
+          <CardContent className="p-4">
             <div className="flex items-start space-x-3">
-              <AlertTriangle className="h-6 w-6 text-red-500 mt-1 animate-pulse" />
+              <AlertTriangle className="h-5 w-5 text-red-500 mt-1" />
               <div>
-                <h3 className="text-red-500 font-semibold mb-2 font-mono">[WARNING] AUTHORIZED USE ONLY</h3>
-                <p className="text-red-400 text-sm font-mono">
-                  {"> "}This platform is designed for educational purposes and authorized security testing only.<br/>
-                  {"> "}All techniques should only be applied to systems you own or have explicit permission to test.<br/>
-                  {"> "}Unauthorized use of these techniques may be illegal and unethical.<br/>
-                  {"> "}Framework developed by @ethicalphoenix for ethical security research.
+                <h3 className="text-red-500 font-semibold mb-1">[AUTHORIZED USE ONLY]</h3>
+                <p className="text-red-400 text-sm">
+                  Professional penetration testing framework. Use only on authorized systems.
                 </p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Enhanced Tabs with better styling */}
+        {/* Tabs */}
         <Tabs defaultValue="tools" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-gray-900 to-black border border-green-500 shadow-lg shadow-green-500/20">
-            <TabsTrigger value="tools" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
-              HACK_TOOLS
+          <TabsList className="grid w-full grid-cols-5 bg-black border border-red-600">
+            <TabsTrigger value="tools" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400">
+              TOOLS
             </TabsTrigger>
-            <TabsTrigger value="modules" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
+            <TabsTrigger value="modules" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400">
               MODULES
             </TabsTrigger>
-            <TabsTrigger value="education" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
+            <TabsTrigger value="education" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400">
               EDUCATION
             </TabsTrigger>
-            <TabsTrigger value="defense" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-400 data-[state=active]:text-black font-mono font-bold">
+            <TabsTrigger value="defense" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400">
               DEFENSE
+            </TabsTrigger>
+            <TabsTrigger value="about" className="data-[state=active]:bg-red-600 data-[state=active]:text-black text-red-400">
+              ABOUT
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="tools" className="mt-8">
+          <TabsContent value="tools" className="mt-6">
             <HackingTools />
           </TabsContent>
 
-          <TabsContent value="modules" className="mt-8">
+          <TabsContent value="modules" className="mt-6">
             {!selectedModule ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {securityModules.map((module) => (
                   <SecurityModuleCard
                     key={module.id}
@@ -230,13 +229,13 @@ const Index = () => {
                 ))}
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <Button 
                   onClick={() => setSelectedModule(null)}
                   variant="outline"
-                  className="mb-4 border-green-500 text-green-400 hover:bg-green-500 hover:text-black font-mono"
+                  className="mb-4 border-red-600 text-red-400 hover:bg-red-600 hover:text-black"
                 >
-                  ← BACK_TO_MODULES
+                  ← BACK
                 </Button>
                 {selectedModule && (
                   <EducationalContent 
@@ -247,48 +246,92 @@ const Index = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="education" className="mt-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="bg-gray-900 border-green-500 shadow-lg shadow-green-500/20">
+          <TabsContent value="education" className="mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <Card className="bg-black border-red-600">
                 <CardHeader>
-                  <CardTitle className="text-green-400 flex items-center space-x-2 font-mono">
+                  <CardTitle className="text-red-400 flex items-center space-x-2">
                     <BookOpen className="h-5 w-5" />
                     <span>[LEARNING_RESOURCES]</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="text-green-300 font-mono">
-                  <ul className="space-y-2">
-                    <li>• OWASP Top 10 Security Risks</li>
-                    <li>• NIST Cybersecurity Framework</li>
-                    <li>• Ethical Hacking Methodologies</li>
-                    <li>• Penetration Testing Standards</li>
-                    <li>• Security Compliance Guidelines</li>
+                <CardContent className="text-red-300">
+                  <ul className="space-y-2 text-sm">
+                    <li>• Advanced Penetration Testing</li>
+                    <li>• Red Team Operations</li>
+                    <li>• Vulnerability Research</li>
+                    <li>• Exploit Development</li>
+                    <li>• Threat Intelligence</li>
                   </ul>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900 border-green-500 shadow-lg shadow-green-500/20">
+              <Card className="bg-black border-red-600">
                 <CardHeader>
-                  <CardTitle className="text-green-400 flex items-center space-x-2 font-mono">
+                  <CardTitle className="text-red-400 flex items-center space-x-2">
                     <Code className="h-5 w-5" />
-                    <span>[CERTIFICATION_PREP]</span>
+                    <span>[CERTIFICATIONS]</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="text-green-300 font-mono">
-                  <ul className="space-y-2">
-                    <li>• Certified Ethical Hacker (CEH)</li>
-                    <li>• CompTIA Security+</li>
-                    <li>• CISSP Preparation</li>
-                    <li>• OSCP Training Materials</li>
-                    <li>• Security+ Practice Tests</li>
+                <CardContent className="text-red-300">
+                  <ul className="space-y-2 text-sm">
+                    <li>• OSCP - Offensive Security</li>
+                    <li>• OSCE - Expert Level</li>
+                    <li>• CISSP - Security Professional</li>
+                    <li>• CEH - Ethical Hacker</li>
+                    <li>• GPEN - Penetration Tester</li>
                   </ul>
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
 
-          <TabsContent value="defense" className="mt-8">
+          <TabsContent value="defense" className="mt-6">
             <DefenseStrategies />
+          </TabsContent>
+
+          <TabsContent value="about" className="mt-6">
+            <div className="max-w-2xl mx-auto">
+              <Card className="bg-black border-red-600">
+                <CardHeader className="text-center">
+                  <div className="mx-auto w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mb-4">
+                    <User className="h-10 w-10 text-black" />
+                  </div>
+                  <CardTitle className="text-red-400 text-2xl">CREATOR: PHOENIX</CardTitle>
+                  <CardDescription className="text-red-300">
+                    Advanced Penetration Testing Framework Developer
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="text-center space-y-4">
+                    <p className="text-red-300 text-sm">
+                      Professional cybersecurity researcher and penetration testing framework developer.
+                      Specialized in advanced offensive security tools and techniques.
+                    </p>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded">
+                        <Instagram className="h-5 w-5 text-red-400" />
+                        <span className="text-red-400 font-mono">@ethicalphoenix</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded">
+                        <MessageCircle className="h-5 w-5 text-red-400" />
+                        <span className="text-red-400 font-mono">t.me/grey_008</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-gray-900 border border-red-600 rounded">
+                      <h4 className="text-red-400 font-semibold mb-2">[FRAMEWORK_INFO]</h4>
+                      <p className="text-red-300 text-sm">
+                        This framework provides real penetration testing tools for authorized security research.
+                        All tools generate executable scripts for professional security assessments.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
