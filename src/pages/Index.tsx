@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,18 +12,10 @@ import LoadingScreen from '../components/LoadingScreen';
 
 const Index = () => {
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [hasAccess, setHasAccess] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return <LoadingScreen />;
+  if (!hasAccess) {
+    return <LoadingScreen onEnter={() => setHasAccess(true)} />;
   }
 
   const securityModules = [
@@ -315,8 +307,8 @@ const Index = () => {
                         rel="noopener noreferrer"
                         className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded hover:bg-red-600 hover:text-black transition-colors cursor-pointer"
                       >
-                        <Instagram className="h-5 w-5 text-red-400" />
-                        <span className="text-red-400 font-mono">@ethicalphoenix</span>
+                        <Instagram className="h-5 w-5" />
+                        <span className="font-mono">@ethicalphoenix</span>
                       </a>
                       
                       <a 
@@ -325,8 +317,8 @@ const Index = () => {
                         rel="noopener noreferrer"
                         className="flex items-center justify-center space-x-3 p-3 border border-red-600 rounded hover:bg-red-600 hover:text-black transition-colors cursor-pointer"
                       >
-                        <MessageCircle className="h-5 w-5 text-red-400" />
-                        <span className="text-red-400 font-mono">t.me/grey_008</span>
+                        <MessageCircle className="h-5 w-5" />
+                        <span className="font-mono">t.me/grey_008</span>
                       </a>
                     </div>
                     
